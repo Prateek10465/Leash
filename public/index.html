@@ -2,268 +2,681 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Leash — Spending Firewall for AI Agents on PayPal</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5">
+  <title>Leash — Spatial AI Firewall &amp; Executive Dashboard</title>
   <meta name="description" content="A spending firewall for AI agents, built on PayPal. Deterministic policy enforcement, prompt injection detection, and human checkout approvals.">
-  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%2338bdf8'/%3E%3Cpath d='M9 22V10h3v9h6v3z' fill='white'/%3E%3C/svg%3E">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23f97316'/%3E%3Cpath d='M9 22V10h3v9h6v3z' fill='white'/%3E%3C/svg%3E">
   
-  <!-- Premium Font Stacks: Geist & Geist Mono -->
+  <!-- Premium Modern Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700;800&family=Geist+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Geist+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
   
   <link rel="stylesheet" href="/vendor/ag-grid/styles/ag-grid.css">
   <link rel="stylesheet" href="/vendor/ag-grid/styles/ag-theme-quartz.css">
   <link rel="stylesheet" href="/styles.css">
 </head>
 <body>
-  <!-- Ambient Atmospheric Light Orbs for Deep Optical Glass Refraction -->
+  <!-- Ambient Atmospheric Light Layers (Hardware-accelerated, lightweight on mobile) -->
   <div class="ambient-glow-wrapper" aria-hidden="true">
     <div class="glow-orb orb-1"></div>
     <div class="glow-orb orb-2"></div>
     <div class="glow-orb orb-3"></div>
-    <div class="glow-orb orb-4"></div>
   </div>
 
-  <!-- Superhuman Floating Action Capsule Dock (Mirroring Reference Design) -->
-  <aside class="floating-dock" aria-label="Quick Actions">
-    <button type="button" class="dock-btn" id="dock-guard" title="Toggle Firewall Mode (Protected / Unguarded)" aria-label="Toggle Firewall Mode">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
-        <path d="M9 12l2 2 4-4"/>
-      </svg>
-    </button>
-    <button type="button" class="dock-btn" id="dock-attack" title="Run Red-Team Adversarial Suite" aria-label="Run Red-Team Suite">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-        <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>
-      </svg>
-    </button>
-    <button type="button" class="dock-btn" id="dock-policy" title="Jump to Deterministic Policy Engine" aria-label="Jump to Policy Engine">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
-        <polyline points="14 2 14 8 20 8"/>
-        <line x1="16" y1="13" x2="8" y2="13"/>
-        <line x1="16" y1="17" x2="8" y2="17"/>
-      </svg>
-    </button>
-    <button type="button" class="dock-btn" id="dock-grid" title="Jump to Cryptographic Decision Log" aria-label="Jump to Decision Log">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-        <rect x="3" y="3" width="18" height="18" rx="2"/>
-        <line x1="3" y1="9" x2="21" y2="9"/>
-        <line x1="3" y1="15" x2="21" y2="15"/>
-        <line x1="9" y1="3" x2="9" y2="21"/>
-      </svg>
-    </button>
-    <button type="button" class="dock-btn" id="dock-top" title="Scroll to Top" aria-label="Scroll to Top">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-        <polyline points="18 15 12 9 6 15"/>
-      </svg>
-    </button>
-  </aside>
+  <!-- Outer Spatial Computing Canvas Container -->
+  <div class="spatial-viewport">
 
-  <!-- Superhuman Frosted Navigation Island -->
-  <header class="top">
-    <div class="top-row">
-      <div class="brand-group">
-        <div class="brand-mark" aria-hidden="true">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
-            <path d="M9 12l2 2 4-4"/>
-          </svg>
-        </div>
-        <div class="wordmark-wrap">
-          <div class="wordmark-row">
-            <span class="wordmark">Leash</span>
-            <span class="tag-status">PayPal AI Firewall</span>
+    <!-- Left Spatial Capsule Dock (Matching Reference Screenshot) -->
+    <aside class="floating-dock" aria-label="Spatial Navigation Rail">
+      <!-- 1. Active Dashboard / Overview (Orange circle with 9 dots) -->
+      <button type="button" class="dock-btn active-orange view-tab" data-view="overview" id="dock-overview" title="Dashboard Home" aria-label="Dashboard Home">
+        <svg viewBox="0 0 24 24" fill="currentColor">
+          <circle cx="5" cy="5" r="2.2"/>
+          <circle cx="12" cy="5" r="2.2"/>
+          <circle cx="19" cy="5" r="2.2"/>
+          <circle cx="5" cy="12" r="2.2"/>
+          <circle cx="12" cy="12" r="2.2"/>
+          <circle cx="19" cy="12" r="2.2"/>
+          <circle cx="5" cy="19" r="2.2"/>
+          <circle cx="12" cy="19" r="2.2"/>
+          <circle cx="19" cy="19" r="2.2"/>
+        </svg>
+      </button>
+
+      <!-- 2. Credit Card / Commerce -->
+      <button type="button" class="dock-btn view-tab" data-view="agent" id="dock-agent-tab" title="Agent Commerce &amp; Cards" aria-label="Agent Commerce">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="2" y="5" width="20" height="14" rx="3"/>
+          <line x1="2" y1="10" x2="22" y2="10"/>
+        </svg>
+      </button>
+
+      <!-- 3. Wallet / Approvals -->
+      <button type="button" class="dock-btn" id="dock-approvals-jump" title="PayPal Approval Queue" aria-label="Approval Queue">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 12V7H5a2 2 0 0 1 0-4h14v4"/>
+          <path d="M3 5v14a2 2 0 0 0 2 2h16v-5"/>
+          <path d="M18 12a2 2 0 0 0 0 4h4v-4z"/>
+        </svg>
+      </button>
+
+      <!-- 4. Checklist / Policy Engine -->
+      <button type="button" class="dock-btn view-tab" data-view="policy" id="dock-policy" title="Deterministic Policy Rules" aria-label="Policy Rules">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="3" y="3" width="18" height="18" rx="2"/>
+          <line x1="8" y1="8" x2="16" y2="8"/>
+          <line x1="8" y1="12" x2="16" y2="12"/>
+          <line x1="8" y1="16" x2="12" y2="16"/>
+        </svg>
+      </button>
+
+      <!-- 5. Decision Log (Audit Ledger) -->
+      <button type="button" class="dock-btn view-tab" data-view="audit" id="dock-grid" title="Cryptographic Decision Log" aria-label="Decision Log">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="3"/>
+          <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/>
+        </svg>
+      </button>
+
+      <!-- 6. Firewall Toggle Guard / Power -->
+      <button type="button" class="dock-btn dock-power" id="dock-guard" title="Toggle Leash Firewall (Guarded / Unguarded)" aria-label="Toggle Firewall Guard">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M18.36 6.64a9 9 0 1 1-12.73 0"/>
+          <line x1="12" y1="2" x2="12" y2="12"/>
+        </svg>
+      </button>
+
+      <!-- Hidden hook for Red-Team suite -->
+      <button type="button" id="dock-attack" style="display:none;" aria-hidden="true"></button>
+      <button type="button" id="dock-top" style="display:none;" aria-hidden="true"></button>
+    </aside>
+
+    <!-- Main Spatial Floating Glass Window -->
+    <div class="spatial-window">
+
+      <!-- Spatial Browser Window Header Bar (Matching Reference Screenshot) -->
+      <header class="window-topbar">
+        <div class="window-controls">
+          <span class="win-dot dot-close"></span>
+          <span class="win-dot dot-min"></span>
+          <span class="win-dot dot-max"></span>
+          <div class="win-nav-arrows">
+            <button type="button" class="win-arrow-btn" aria-label="Back">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M15 18l-6-6 6-6"/></svg>
+            </button>
+            <button type="button" class="win-arrow-btn" aria-label="Forward">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 18l6-6-6-6"/></svg>
+            </button>
           </div>
-          <span class="tagline">Policy enforcement & prompt injection defense for autonomous agent transactions</span>
         </div>
-      <div class="top-controls">
+
+        <!-- URL Pill Bar -->
+        <div class="win-url-pill">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#34d399" stroke-width="2.5" class="url-lock"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          <span class="url-text">leash.internal/paypal-ai-firewall</span>
+          <button type="button" class="url-refresh" id="btn-manual-refresh" title="Refresh Live Data" aria-label="Refresh">
+            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>
+          </button>
+        </div>
+
+        <div class="win-actions">
+          <button type="button" class="win-action-btn" title="Share Telemetry" aria-label="Share">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg>
+          </button>
+          <button type="button" class="win-action-btn" title="Export Ledger" aria-label="Download">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          </button>
+          <button type="button" class="win-action-btn" title="Inspect Firewall" aria-label="Window View">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/></svg>
+          </button>
+        </div>
+      </header>
+
+      <!-- System Telemetry Ribbon (Hidden or Minimized into Glass Style) -->
+      <div class="system-telemetry-bar">
         <div class="modes" id="modes" aria-label="Runtime telemetry"></div>
         <div class="user-profile-dock" id="user-profile-dock"></div>
       </div>
-    </div>
-    
-    <!-- Superhuman Telemetry Glass Strip -->
-    <div class="ledger" id="ledger" aria-live="polite"></div>
-  </header>
 
-  <div class="wrap layout">
-    <!-- Left Configuration & Security Rail -->
-    <aside class="rail" aria-label="Firewall configuration and security suite">
-      <!-- Policy Section -->
-      <section class="panel">
-        <div class="panel-header">
-          <span class="panel-tag">Policy Engine</span>
-          <h2>Deterministic Rules</h2>
-          <p class="hint">Hard programmatic limits enforced before money moves. An AI agent cannot argue, hallucinate, or negotiate past these.</p>
-        </div>
-        
-        <div class="presets-row" aria-label="Rule presets">
-          <span class="presets-label">Presets:</span>
-          <button type="button" class="preset-chip" data-preset="default">Default</button>
-          <button type="button" class="preset-chip" data-preset="strict">Strict $25</button>
-          <button type="button" class="preset-chip" data-preset="office">Electronics Only</button>
-          <button type="button" class="preset-chip" data-preset="zero">Zero Transfers</button>
-        </div>
-
-        <label class="sr" for="policy-text">Spending rules in plain English</label>
-        <textarea id="policy-text" rows="5" spellcheck="false" placeholder="Enter policy rules in plain English..."></textarea>
-        
-        <div class="btn-group">
-          <button type="button" class="btn secondary" id="compile">
-            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg>
-            Compile Rules
+      <!-- Dashboard Perspectives Navigation Bar -->
+      <nav class="view-nav-wrap" aria-label="Dashboard perspective tabs">
+        <div class="view-nav-bar" role="tablist">
+          <button type="button" class="view-tab active" data-view="overview" id="tab-overview" role="tab" aria-selected="true" aria-controls="view-overview">
+            <svg viewBox="0 0 24 24" width="15" height="15" fill="currentColor">
+              <circle cx="5" cy="5" r="2.2"/><circle cx="12" cy="5" r="2.2"/><circle cx="19" cy="5" r="2.2"/>
+              <circle cx="5" cy="12" r="2.2"/><circle cx="12" cy="12" r="2.2"/><circle cx="19" cy="12" r="2.2"/>
+              <circle cx="5" cy="19" r="2.2"/><circle cx="12" cy="19" r="2.2"/><circle cx="19" cy="19" r="2.2"/>
+            </svg>
+            <span>Executive Overview</span>
           </button>
-          <button type="button" class="btn primary" id="save-policy" disabled>Save Policy</button>
+
+          <button type="button" class="view-tab" data-view="agent" id="tab-agent" role="tab" aria-selected="false" aria-controls="view-agent">
+            <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.2">
+              <rect x="2" y="5" width="20" height="14" rx="3"/><line x1="2" y1="10" x2="22" y2="10"/>
+            </svg>
+            <span>Agent Simulator &amp; Approvals</span>
+            <span class="tab-chip chip-live">Live</span>
+          </button>
+
+          <button type="button" class="view-tab" data-view="policy" id="tab-policy" role="tab" aria-selected="false" aria-controls="view-policy">
+            <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.2">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/>
+            </svg>
+            <span>Policy &amp; Red-Team</span>
+          </button>
+
+          <button type="button" class="view-tab" data-view="audit" id="tab-audit" role="tab" aria-selected="false" aria-controls="view-audit">
+            <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.2">
+              <rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="3" y1="15" x2="21" y2="15"/><line x1="9" y1="3" x2="9" y2="21"/>
+            </svg>
+            <span>Audit Ledger</span>
+            <span class="tab-chip" id="tab-audit-count">0</span>
+          </button>
         </div>
-        
-        <p class="note" id="compile-note"></p>
-        <ul class="rules" id="rules"></ul>
+      </nav>
+
+      <!-- VIEW 0: EXECUTIVE OVERVIEW (TAILORED 100% TO LEASH AI FIREWALL & PAYPAL) -->
+      <section class="dashboard-view active" id="view-overview" role="tabpanel" aria-labelledby="tab-overview">
+        <div class="reference-dashboard-grid">
+
+          <!-- ================= LEFT COLUMN ================= -->
+          <div class="ref-col-left">
+            <h1 class="ref-dashboard-title">Firewall Command Matrix</h1>
+
+            <!-- 1. Top 3-Stat Frosted Capsule Pill Bar -->
+            <div class="ref-stats-pill-bar">
+              <!-- Stat 1: Total Remaining Budget -->
+              <div class="ref-stat-item">
+                <div class="ref-stat-icon" title="Remaining Monthly Cap">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M16 8h-6a2 2 0 1 0 0 4h4a2 2 0 1 1 0 4H8"/><line x1="12" y1="6" x2="12" y2="8"/><line x1="12" y1="16" x2="12" y2="18"/></svg>
+                </div>
+                <div class="ref-stat-content">
+                  <span class="ref-stat-label">Remaining Budget</span>
+                  <span class="ref-stat-val" id="ref-total-balance">$1,250.00</span>
+                </div>
+              </div>
+
+              <!-- Stat 2: Protected Spend -->
+              <div class="ref-stat-item">
+                <div class="ref-stat-icon" title="Protected Settled Volume (MTD)">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                </div>
+                <div class="ref-stat-content">
+                  <span class="ref-stat-label">Protected Spend (MTD)</span>
+                  <span class="ref-stat-val" id="ref-earnings">$248.50</span>
+                </div>
+              </div>
+
+              <!-- Stat 3: Loss Intercepted -->
+              <div class="ref-stat-item">
+                <div class="ref-stat-icon" title="Adversarial Prompt Injections Blocked">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#ef4444" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+                </div>
+                <div class="ref-stat-content">
+                  <span class="ref-stat-label">Loss Intercepted</span>
+                  <span class="ref-stat-val" id="ref-expenses" style="color:#f87171">$450.00</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- 2. "Statistic" Header & Chart Card -->
+            <div class="ref-section-header">
+              <h2 class="ref-section-title">Telemetry &amp; Threat Curve</h2>
+              <div class="ref-dropdown-pill" tabindex="0">
+                <span>All Agent Traffic</span>
+                <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9l6 6 6-6"/></svg>
+              </div>
+            </div>
+
+            <!-- Large Glass Chart Panel -->
+            <div class="ref-chart-card">
+              <div class="ref-chart-header">
+                <div>
+                  <h3 class="ref-chart-heading">Autonomous Spend vs. Threat Vectors</h3>
+                  <p class="ref-chart-sub">Real-time agent purchase velocity vs. heuristic prompt injection interception</p>
+                </div>
+                <div class="ref-chart-legend">
+                  <span class="legend-dot dot-groceries"></span><span class="legend-text">Autonomous Buys</span>
+                  <span class="legend-dot dot-invest"></span><span class="legend-text">Human Authorized</span>
+                  <span class="legend-dot dot-hobbies"></span><span class="legend-text">Blocked Attacks</span>
+                </div>
+              </div>
+
+              <!-- Dual Spline Wave Chart Canvas -->
+              <div class="ref-chart-wrapper">
+                <svg class="ref-spline-svg" viewBox="0 0 680 180" preserveAspectRatio="none">
+                  <defs>
+                    <linearGradient id="orangeGlow" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="0%" stop-color="#f97316" stop-opacity="0.35"/>
+                      <stop offset="100%" stop-color="#f97316" stop-opacity="0.0"/>
+                    </linearGradient>
+                  </defs>
+                  
+                  <!-- Area fill under orange spline -->
+                  <path d="M 20 120 C 120 150, 180 80, 260 85 C 340 90, 420 145, 520 100 C 580 75, 620 60, 660 50 L 660 170 L 20 170 Z" fill="url(#orangeGlow)"/>
+
+                  <!-- White dashed spline: Deterministic Policy Ceiling -->
+                  <path d="M 20 135 C 100 120, 180 105, 260 115 C 340 125, 420 90, 520 75 C 580 65, 620 60, 660 62" fill="none" stroke="rgba(255, 255, 255, 0.7)" stroke-width="2.2" stroke-dasharray="4,4"/>
+
+                  <!-- Orange solid curved wave: Real Agent Volume -->
+                  <path d="M 20 120 C 120 150, 180 80, 260 85 C 340 90, 420 145, 520 100 C 580 75, 620 60, 660 50" fill="none" stroke="#f97316" stroke-width="3" stroke-linecap="round"/>
+
+                  <!-- Pinned Peak Node (Tooltip) -->
+                  <circle cx="260" cy="85" r="4.5" fill="#ffffff" stroke="#f97316" stroke-width="2"/>
+                </svg>
+
+                <!-- Pinned Floating Tooltip Pill -->
+                <div class="ref-chart-tooltip" style="left: 38%; top: 28%;">
+                  <span>0.00 Threat Risk</span>
+                </div>
+
+                <!-- X Axis Labels -->
+                <div class="ref-chart-xaxis">
+                  <span>Jan</span>
+                  <span>Feb</span>
+                  <span>Mar</span>
+                  <span>Apr</span>
+                  <span>May</span>
+                  <span>Jun</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- 3. Bottom Row: Active Spending Limits & Firewall Integrity -->
+            <div class="ref-bottom-row">
+              <!-- Left Sub-row: Spending Caps -->
+              <div class="ref-sub-section">
+                <h3 class="ref-sub-title">Active Spending Limits</h3>
+                <div class="ref-goals-container">
+                  <!-- Goal Card 1 -->
+                  <div class="ref-goal-card">
+                    <span class="ref-goal-pct">60%</span>
+                    <div class="ref-goal-bar"><div class="ref-goal-fill" style="width: 60%;"></div></div>
+                    <span class="ref-goal-label">Monthly Cap ($200)</span>
+                  </div>
+
+                  <!-- Goal Card 2 -->
+                  <div class="ref-goal-card">
+                    <span class="ref-goal-pct">89%</span>
+                    <div class="ref-goal-bar"><div class="ref-goal-fill" style="width: 89%;"></div></div>
+                    <span class="ref-goal-label">Per-Tx Limit ($50)</span>
+                  </div>
+
+                  <!-- Goal Add Button (+) -->
+                  <button type="button" class="ref-goal-add-btn view-tab" data-view="policy" title="Edit Deterministic Policy Rules" aria-label="Edit Rules">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                  </button>
+                </div>
+              </div>
+
+              <!-- Right Sub-row: Firewall Integrity -->
+              <div class="ref-sub-section">
+                <h3 class="ref-sub-title">Firewall Integrity</h3>
+                <div class="ref-business-card">
+                  <div class="ref-biz-info">
+                    <div class="ref-biz-target-row">
+                      <span class="ref-biz-label">Adversarial Defense</span>
+                      <span class="ref-biz-badge">100% BLOCKED</span>
+                    </div>
+
+                    <div class="ref-biz-savings-group">
+                      <span class="ref-biz-sublabel">Red-Team Suite Validation</span>
+                      <span class="ref-biz-amount">7 of 7 Attacks Stopped</span>
+                      <div class="ref-biz-bar"><div class="ref-biz-bar-fill" style="width: 100%; background: #34d399;"></div></div>
+                    </div>
+                  </div>
+
+                  <!-- Donut Ring Chart -->
+                  <div class="ref-donut-wrap" title="Firewall Pass Efficacy">
+                    <svg class="ref-donut-svg" viewBox="0 0 36 36">
+                      <path class="donut-bg" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"/>
+                      <path class="donut-fill" stroke="#34d399" stroke-dasharray="98, 100" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"/>
+                    </svg>
+                    <span class="ref-donut-text" style="color:#34d399;">98%</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- ================= RIGHT COLUMN ================= -->
+          <div class="ref-col-right">
+
+            <!-- Upper Profile & Virtual PayPal Commercial Card Panel -->
+            <div class="ref-profile-card">
+              <!-- Top Header: Bell & 3-dots -->
+              <div class="ref-profile-header">
+                <button type="button" class="ref-icon-action ref-bell-btn" id="ref-bell-approvals" title="Pending PayPal Human Approvals" aria-label="Approvals">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+                  <span class="ref-bell-dot"></span>
+                </button>
+                <button type="button" class="ref-icon-action view-tab" data-view="policy" title="Configure Firewall Engine" aria-label="Configure Engine">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="5" r="1.8"/><circle cx="12" cy="12" r="1.8"/><circle cx="12" cy="19" r="1.8"/></svg>
+                </button>
+              </div>
+
+              <!-- Profile Avatar & Details -->
+              <div class="ref-avatar-wrapper">
+                <div class="ref-avatar-ring">
+                  <img src="/assets/avatar.jpg" alt="Security Operator" class="ref-avatar-img" onerror="this.src='https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=200&q=80'">
+                </div>
+                <div class="ref-exclusive-badge">PayPal Firewall Active</div>
+                <h3 class="ref-user-name" id="ref-user-name-display">Dev Admin (Security Ops)</h3>
+              </div>
+
+              <!-- 4 Quick-Action Circular Buttons (100% Leash-Specific) -->
+              <div class="ref-actions-row">
+                <button type="button" class="ref-action-item view-tab" data-view="agent" title="Deploy Autonomous AI Shopping Agent">
+                  <div class="ref-action-circle">
+                    <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+                  </div>
+                  <span class="ref-action-label">Deploy Agent</span>
+                </button>
+
+                <button type="button" class="ref-action-item" id="ref-btn-receive" title="Review Human Checkout Approval Queue">
+                  <div class="ref-action-circle">
+                    <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+                  </div>
+                  <span class="ref-action-label">Approvals</span>
+                </button>
+
+                <button type="button" class="ref-action-item view-tab" data-view="policy" title="Deterministic Spending Rules">
+                  <div class="ref-action-circle">
+                    <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+                  </div>
+                  <span class="ref-action-label">Policy Rules</span>
+                </button>
+
+                <button type="button" class="ref-action-item" id="ref-btn-topup" title="Run 7-Attack Adversarial Red-Team Suite">
+                  <div class="ref-action-circle">
+                    <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+                  </div>
+                  <span class="ref-action-label">Red-Team</span>
+                </button>
+              </div>
+
+              <!-- Gorgeous 3D Stacked PayPal AI Commercial Card Graphic -->
+              <div class="ref-credit-card-deck">
+                <!-- Stacked Under-Layers for 3D Tactile Depth -->
+                <div class="card-under-layer card-under-2"></div>
+                <div class="card-under-layer card-under-1"></div>
+
+                <!-- Main Glowing Holographic Front Card -->
+                <div class="ref-credit-card-front">
+                  <div class="card-mesh-shine"></div>
+                  
+                  <div class="card-row-top">
+                    <span class="card-holder-name">AI AGENT #01 · AUTONOMOUS</span>
+                    <span class="card-visa-logo" style="font-size:16px; font-style:normal; font-weight:800; display:flex; align-items:center; gap:4px;">
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M7.076 21.337H2.47a.641.641 0 0 1-.633-.74L4.944 3.72a.784.784 0 0 1 .773-.655h6.634c3.484 0 5.617 1.636 5.253 4.887-.333 2.973-2.186 4.604-4.83 4.604h-2.14a.784.784 0 0 0-.773.655l-1.127 7.127a.64.64 0 0 1-.633.74z"/></svg>
+                      PayPal
+                    </span>
+                  </div>
+
+                  <div class="card-chip-graphic"></div>
+
+                  <div class="card-row-bottom">
+                    <div class="card-meta-group">
+                      <span class="card-faint-label">Checkout Gate</span>
+                      <span class="card-faint-val">Orders v2</span>
+                    </div>
+
+                    <div class="card-balance-group">
+                      <span class="card-balance-label">Available Balance</span>
+                      <span class="card-balance-val">$1,250.00</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+
+            <!-- "Live Agent Decisions" Section -->
+            <div class="ref-transactions-panel">
+              <h3 class="ref-tx-title">Live Agent Decisions</h3>
+
+              <div class="ref-tx-list" id="ref-recent-transactions-list">
+                <!-- Transaction Item 1: Clean Purchase -->
+                <div class="ref-tx-item" tabindex="0">
+                  <div class="ref-tx-avatar-wrap">
+                    <div class="ref-tx-avatar-icon" style="color:#38bdf8; background:rgba(56, 189, 248, 0.12);">
+                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+                    </div>
+                  </div>
+                  <div class="ref-tx-info">
+                    <div class="ref-tx-name">Keychron K2 Keyboard</div>
+                    <div class="ref-tx-category">Clean Procurement · Auto-Approved</div>
+                    <div class="ref-tx-time">Just now · PayPal Payout</div>
+                  </div>
+                  <div class="ref-tx-amount-badge">
+                    <span>$48.50</span>
+                  </div>
+                </div>
+
+                <!-- Transaction Item 2: Blocked Hijack -->
+                <div class="ref-tx-item" id="ref-tx-live-preview" tabindex="0">
+                  <div class="ref-tx-avatar-wrap">
+                    <div class="ref-tx-avatar-icon" style="color:#fb7185; background:rgba(251, 113, 133, 0.14);">
+                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+                    </div>
+                  </div>
+                  <div class="ref-tx-info">
+                    <div class="ref-tx-name">Adversarial Wire Diversion</div>
+                    <div class="ref-tx-category">Prompt Injection Blocked · partner@vendor.com</div>
+                    <div class="ref-tx-time">3m ago · 0.94 Risk Score</div>
+                  </div>
+                  <div class="ref-tx-amount-badge" style="background:#ef4444; box-shadow:0 2px 10px rgba(239, 68, 68, 0.4);">
+                    <span>Blocked $200</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Bottom "See all transactions" link -->
+              <button type="button" class="ref-see-all-btn view-tab" data-view="audit" id="btn-see-all-tx">
+                <span>Inspect Full Decision Ledger</span>
+                <span class="ref-arrow-circle">
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                </span>
+              </button>
+            </div>
+
+          </div>
+
+        </div>
       </section>
 
-      <!-- Adversarial Red-Team Matrix -->
-      <section class="panel">
-        <div class="panel-header">
-          <span class="panel-tag tag-warning">Adversarial Testing</span>
-          <h2>Red-Team Suite</h2>
-          <p class="hint">Replays seven injection attacks and two legitimate controls against your current policy in a local sandbox copy.</p>
-        </div>
-        
-        <button type="button" class="btn secondary full-width" id="run-attacks">
-          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
-          Run Attack Suite
-        </button>
-        <div id="attack-out" aria-live="polite"></div>
-      </section>
-    </aside>
 
-    <!-- Main Execution & Audit Stage -->
-    <main class="stage">
-      <!-- Agent Shopping Simulation Console -->
-      <section class="panel">
-        <div class="panel-header">
-          <span class="panel-tag tag-cyan">Agent Telemetry</span>
-          <h2>Autonomous Agent Simulation</h2>
-          <p class="hint">Deploy an agent to source products. The first listing conceals an adversarial prompt injection diverting $200 to a stranger.</p>
-        </div>
-        
-        <form id="agent-form" class="agent-form">
-          <div class="input-wrapper">
-            <label class="sr" for="task">What should the agent buy?</label>
-            <input id="task" name="task" type="text" value="Buy a mechanical keyboard under $50" autocomplete="off" placeholder="Enter agent shopping task...">
-            <span class="key-hint">Enter</span>
-          </div>
-          <button class="btn primary btn-deploy" id="run" type="submit">
-            <span>Deploy Agent</span>
-            <span class="btn-arrow" aria-hidden="true">
-              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-            </span>
-          </button>
-          
-          <div class="scenarios-strip" aria-label="Demo task scenarios">
-            <span class="scenarios-label">Test Scenarios:</span>
-            <button type="button" class="scenario-pill" data-task="Buy a mechanical keyboard under $50">Poisoned Listing (Keyboard)</button>
-            <button type="button" class="scenario-pill" data-task="Buy an ergonomic wireless mouse under $35">Clean Purchase ($35)</button>
-            <button type="button" class="scenario-pill" data-task="Send $200 consulting fee to partner@vendor.com">Unauthorized Wire ($200)</button>
-          </div>
-
-          <div class="controls-bar">
-            <fieldset class="seg" id="seg-guard">
-              <legend class="sr">Firewall Gate</legend>
-              <label><input type="radio" name="guard" value="on" checked><span>Leash On (Protected)</span></label>
-              <label><input type="radio" name="guard" value="off"><span class="off">Leash Off (Unguarded)</span></label>
-            </fieldset>
+      <!-- VIEW 1: AGENT COMMERCE (SIMULATION, DISCOVERY, PIPELINE, APPROVALS) -->
+      <section class="dashboard-view" id="view-agent" role="tabpanel" aria-labelledby="tab-agent" hidden>
+        <div class="panel-container-split">
+          <!-- Simulation Console -->
+          <div class="panel">
+            <div class="panel-header">
+              <span class="panel-tag tag-cyan">Autonomous Agent Simulation</span>
+              <h2>Agent Commerce Engine</h2>
+              <p class="hint">Deploy an agent to source products. The first listing conceals an adversarial prompt injection diverting $200 to an attacker.</p>
+            </div>
             
-            <fieldset class="seg" id="seg-style">
-              <legend class="sr">Agent Model Profile</legend>
-              <label><input type="radio" name="style" value="redteam" checked><span>Vulnerable (Trusts Text)</span></label>
-              <label><input type="radio" name="style" value="standard"><span>Standard Guarded</span></label>
-            </fieldset>
-          </div>
-        </form>
+            <form id="agent-form" class="agent-form">
+              <div class="input-wrapper">
+                <label class="sr" for="task">What should the agent buy?</label>
+                <input id="task" name="task" type="text" value="Buy a mechanical keyboard under $50" autocomplete="off" placeholder="Enter agent shopping task...">
+                <span class="key-hint">Enter</span>
+              </div>
 
-        <!-- Live Visual Architecture Pipeline (Agent -> Discovery -> Firewall -> PayPal) -->
-        <div class="pipeline-visualizer" id="pipeline-visualizer" aria-label="Transaction Pipeline Architecture">
-          <div class="pipeline-node active" id="node-intent">
-            <span class="node-icon">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
-            </span>
-            <div class="node-meta">
-              <span class="node-step">01 Intent</span>
-              <span class="node-name">Task Goal</span>
+              <div class="scenarios-strip" aria-label="Demo task scenarios">
+                <span class="scenarios-label">Test Scenarios:</span>
+                <button type="button" class="scenario-pill" data-task="Buy a mechanical keyboard under $50">Poisoned Listing (Keyboard)</button>
+                <button type="button" class="scenario-pill" data-task="Buy an ergonomic wireless mouse under $35">Clean Purchase ($35)</button>
+                <button type="button" class="scenario-pill" data-task="Send $200 consulting fee to partner@vendor.com">Unauthorized Wire ($200)</button>
+              </div>
+
+              <div class="controls-bar">
+                <fieldset class="seg" id="seg-guard">
+                  <legend class="sr">Firewall Gate</legend>
+                  <label><input type="radio" name="guard" value="on" checked><span>Leash On (Protected)</span></label>
+                  <label><input type="radio" name="guard" value="off"><span class="off">Leash Off (Unguarded)</span></label>
+                </fieldset>
+                
+                <fieldset class="seg" id="seg-style">
+                  <legend class="sr">Agent Model Profile</legend>
+                  <label><input type="radio" name="style" value="redteam" checked><span>Vulnerable (Trusts Text)</span></label>
+                  <label><input type="radio" name="style" value="standard"><span>Standard Guarded</span></label>
+                </fieldset>
+
+                <button class="btn primary btn-deploy" id="run" type="submit">
+                  <span>Deploy Agent</span>
+                  <span class="btn-arrow" aria-hidden="true">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                  </span>
+                </button>
+              </div>
+            </form>
+
+            <!-- Visual Architecture Pipeline -->
+            <div class="pipeline-visualizer" id="pipeline-visualizer" aria-label="Transaction Pipeline Architecture">
+              <div class="pipeline-node active" id="node-intent">
+                <span class="node-icon">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
+                </span>
+                <div class="node-meta">
+                  <span class="node-step">01 Intent</span>
+                  <span class="node-name">Task Goal</span>
+                </div>
+              </div>
+              <div class="node-link" id="link-1"></div>
+              <div class="pipeline-node" id="node-agent">
+                <span class="node-icon">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/></svg>
+                </span>
+                <div class="node-meta">
+                  <span class="node-step">02 Discovery</span>
+                  <span class="node-name">Agent Mind</span>
+                </div>
+              </div>
+              <div class="node-link" id="link-2"></div>
+              <div class="pipeline-node" id="node-guard">
+                <span class="node-icon">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                </span>
+                <div class="node-meta">
+                  <span class="node-step">03 Defense</span>
+                  <span class="node-name">Leash Firewall</span>
+                </div>
+              </div>
+              <div class="node-link" id="link-3"></div>
+              <div class="pipeline-node" id="node-paypal">
+                <span class="node-icon">
+                  <svg viewBox="0 0 24 24" fill="currentColor"><path d="M7.076 21.337H2.47a.641.641 0 0 1-.633-.74L4.944 3.72a.784.784 0 0 1 .773-.655h6.634c3.484 0 5.617 1.636 5.253 4.887-.333 2.973-2.186 4.604-4.83 4.604h-2.14a.784.784 0 0 0-.773.655l-1.127 7.127a.64.64 0 0 1-.633.74z"/></svg>
+                </span>
+                <div class="node-meta">
+                  <span class="node-step">04 Settlement</span>
+                  <span class="node-name">PayPal Engine</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Products Grid -->
+            <div id="agent-products" class="products-grid" aria-live="polite"></div>
+
+            <!-- Agent Cart -->
+            <div id="agent-cart" class="cart-summary" aria-live="polite"></div>
+
+            <!-- Terminal Output -->
+            <div id="run-out" class="run-out" aria-live="polite">
+              <div class="terminal-placeholder">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" class="text-muted"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+                <p>Deploy the agent above to stream live execution steps, provenance tracing, and pipeline checkpoints.</p>
+              </div>
             </div>
           </div>
-          <div class="node-link" id="link-1"></div>
-          <div class="pipeline-node" id="node-agent">
-            <span class="node-icon">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/></svg>
-            </span>
-            <div class="node-meta">
-              <span class="node-step">02 Discovery</span>
-              <span class="node-name">Agent Mind</span>
-            </div>
-          </div>
-          <div class="node-link" id="link-2"></div>
-          <div class="pipeline-node" id="node-guard">
-            <span class="node-icon">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-            </span>
-            <div class="node-meta">
-              <span class="node-step">03 Defense</span>
-              <span class="node-name">Leash Firewall</span>
-            </div>
-          </div>
-          <div class="node-link" id="link-3"></div>
-          <div class="pipeline-node" id="node-paypal">
-            <span class="node-icon">
-              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M7.076 21.337H2.47a.641.641 0 0 1-.633-.74L4.944 3.72a.784.784 0 0 1 .773-.655h6.634c3.484 0 5.617 1.636 5.253 4.887-.333 2.973-2.186 4.604-4.83 4.604h-2.14a.784.784 0 0 0-.773.655l-1.127 7.127a.64.64 0 0 1-.633.74z"/></svg>
-            </span>
-            <div class="node-meta">
-              <span class="node-step">04 Settlement</span>
-              <span class="node-name">PayPal Engine</span>
-            </div>
-          </div>
-        </div>
 
-        <!-- Discovered Products Grid (Visual Catalog Experience) -->
-        <div id="agent-products" class="products-grid" aria-live="polite"></div>
-
-        <!-- Agent Settlement Receipt / Live Cart -->
-        <div id="agent-cart" class="cart-summary" aria-live="polite"></div>
-
-        <div id="run-out" class="run-out" aria-live="polite">
-          <div class="terminal-placeholder">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" class="text-muted"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
-            <p>Deploy the agent above to stream live execution steps, provenance tracing, and pipeline checkpoints.</p>
+          <!-- Human-In-The-Loop Verification Queue -->
+          <div class="panel" id="panel-approvals">
+            <div class="panel-header">
+              <span class="panel-tag tag-amber">Human-In-The-Loop</span>
+              <h2>PayPal Approval Queue</h2>
+              <p class="hint">Payments exceeding the auto-approve threshold hold in PayPal Orders v2 until authorized directly inside PayPal checkout.</p>
+            </div>
+            <div id="approvals"></div>
           </div>
         </div>
       </section>
 
-      <!-- Human-In-The-Loop Verification Queue -->
-      <section class="panel">
-        <div class="panel-header">
-          <span class="panel-tag tag-amber">Human-In-The-Loop</span>
-          <h2>Approval Queue</h2>
-          <p class="hint">Payments exceeding the auto-approve threshold hold in PayPal Orders v2 until authorized directly inside PayPal checkout.</p>
+      <!-- VIEW 2: POLICY & RED-TEAM SUITE -->
+      <section class="dashboard-view" id="view-policy" role="tabpanel" aria-labelledby="tab-policy" hidden>
+        <div class="policy-layout">
+          <!-- Policy Engine -->
+          <div class="panel">
+            <div class="panel-header">
+              <span class="panel-tag">Policy Engine</span>
+              <h2>Deterministic Rules</h2>
+              <p class="hint">Hard programmatic limits enforced before money moves. An AI agent cannot argue, hallucinate, or negotiate past these.</p>
+            </div>
+            
+            <div class="presets-row" aria-label="Rule presets">
+              <span class="presets-label">Presets:</span>
+              <button type="button" class="preset-chip" data-preset="default">Default</button>
+              <button type="button" class="preset-chip" data-preset="strict">Strict $25</button>
+              <button type="button" class="preset-chip" data-preset="office">Electronics Only</button>
+              <button type="button" class="preset-chip" data-preset="zero">Zero Transfers</button>
+            </div>
+
+            <label class="sr" for="policy-text">Spending rules in plain English</label>
+            <textarea id="policy-text" rows="5" spellcheck="false" placeholder="Enter policy rules in plain English..."></textarea>
+            
+            <div class="btn-group">
+              <button type="button" class="btn secondary" id="compile">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg>
+                Compile Rules
+              </button>
+              <button type="button" class="btn primary" id="save-policy" disabled>Save Policy</button>
+            </div>
+            
+            <p class="note" id="compile-note"></p>
+            <ul class="rules" id="rules"></ul>
+          </div>
+
+          <!-- Adversarial Red-Team Matrix -->
+          <div class="panel">
+            <div class="panel-header">
+              <span class="panel-tag tag-warning">Adversarial Testing</span>
+              <h2>Red-Team Suite</h2>
+              <p class="hint">Replays seven injection attacks and two legitimate controls against your current policy in a local sandbox copy.</p>
+            </div>
+            
+            <button type="button" class="btn secondary full-width" id="run-attacks">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+              Run Attack Suite
+            </button>
+            <div id="attack-out" aria-live="polite"></div>
+          </div>
         </div>
-        <div id="approvals"></div>
       </section>
 
-      <!-- Permanent Decision Audit Log (AG Grid) -->
-      <section class="panel">
-        <div class="panel-header-split">
-          <div>
-            <span class="panel-tag tag-blue">Cryptographic Audit Trail</span>
-            <h2>Decision Log</h2>
-            <p class="hint">Every transaction is sealed with provenance data, heuristic injection scores, and PayPal debug references.</p>
+      <!-- VIEW 3: DECISION AUDIT LOG (AG GRID) -->
+      <section class="dashboard-view" id="view-audit" role="tabpanel" aria-labelledby="tab-audit" hidden>
+        <div class="panel">
+          <div class="panel-header-split">
+            <div>
+              <span class="panel-tag tag-blue">Cryptographic Audit Trail</span>
+              <h2>Decision Log</h2>
+              <p class="hint">Every transaction is sealed with provenance data, heuristic injection scores, and PayPal debug references.</p>
+            </div>
+            <button type="button" class="btn-text" id="reset">Clear Log</button>
           </div>
-          <button type="button" class="btn-text" id="reset">Clear Log</button>
+          <div id="grid" class="ag-theme-quartz"></div>
         </div>
-        <div id="grid" class="ag-theme-quartz"></div>
       </section>
-    </main>
-  </div>
+
+      <!-- Telemetry Strip (Preserved for app.js) -->
+      <div class="ledger" id="ledger" aria-live="polite" style="display:none;"></div>
+
+    </div><!-- End spatial-window -->
+
+  </div><!-- End spatial-viewport -->
 
   <!-- Replay & Security Inspector Drawer -->
   <aside class="drawer" id="drawer" aria-hidden="true" aria-label="Decision replay inspector">

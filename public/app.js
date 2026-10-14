@@ -250,7 +250,29 @@ function renderHeader() {
       <div class="t-value">${usd(stats.unguardedPaid)}</div>
       <span class="t-sub">Paid while Leash was turned off</span>
     </div>`;
+
+  // Synchronize spatial overview metrics with Leash telemetry
+  if ($('#ref-total-balance')) {
+    const lim = policy?.monthlyLimit || 1000;
+    const remaining = Math.max(0, lim - (stats.spentMonth || 0));
+    $('#ref-total-balance').textContent = usd(remaining);
+  }
+  if ($('#ref-earnings')) {
+    $('#ref-earnings').textContent = usd(stats.spentMonth || 0);
+  }
+  if ($('#ref-expenses')) {
+    $('#ref-expenses').textContent = usd(stats.blockedValue || 0);
+  }
+  if ($('#ref-user-name-display')) {
+    $('#ref-user-name-display').textContent = currentUser?.name || 'Dev Admin (Security Ops)';
+  }
+  const bellDot = document.querySelector('.ref-bell-dot');
+  if (bellDot) {
+    bellDot.style.display = (stats.pending > 0) ? 'block' : 'none';
+  }
 }
+
+
 
 /* ---------- rules ---------- */
 function describePolicy(p) {
@@ -431,6 +453,7 @@ function renderRun() {
     ${run.decisions.length ? `<div class="lanes-table"><div class="lanes"><div class="hd">Payment Attempt</div><div class="hd">01 Policy</div><div class="hd">02 Reviewer</div><div class="hd">03 Approval</div><div class="hd">04 PayPal</div>${lanes}</div></div>` : ''}`;
 }
 async function runAgent(task, guarded, style) {
+  setView('agent');
   run = { engine: '', guarded, trace: [], decisions: [], seen: new Set(), products: {} };
   resetPipeline();
   renderRun();
@@ -595,7 +618,9 @@ async function refresh() {
   renderRules();
   renderApprovals();
   gridApi?.setGridOption('rowData', state.decisions);
-  $('#grid').style.height = `${Math.max(180, Math.min(6, state.decisions.length) * 74 + 40)}px`;
+  const auditCount = $('#tab-audit-count');
+  if (auditCount) auditCount.textContent = state.decisions?.length || 0;
+  $('#grid').style.height = `${Math.max(220, Math.min(8, state.decisions.length) * 74 + 48)}px`;
 }
 
 document.addEventListener('click', async (e) => {
@@ -707,32 +732,103 @@ if (dockGuard) {
   document.querySelectorAll('input[name=guard]').forEach((r) => r.addEventListener('change', updateDockGuard));
   updateDockGuard();
 }
-const dockAttack = $('#dock-attack');
-if (dockAttack) dockAttack.onclick = runAttacks;
-const dockPolicy = $('#dock-policy');
-if (dockPolicy) dockPolicy.onclick = () => {
-  $('#policy-text')?.focus();
-  $('#policy-text')?.scrollIntoView({ behavior: 'smooth', block: 'center' });
-};
-const dockGrid = $('#dock-grid');
-if (dockGrid) dockGrid.onclick = () => {
-  $('#grid')?.scrollIntoView({ behavior: 'smooth', block: 'center' });
-};
-const dockTop = $('#dock-top');
-if (dockTop) dockTop.onclick = () => window.scrollTo({ top: 0, behavior: 'smooth' });
+/* ---------- view perspectives navigation ---------- */
+function setView(name) {
+  const views = ['overview', 'agent', 'policy', 'audit'];
+  if (!views.includes(name)) name = 'overview';
+  
+  views.forEach((v) => {
+    const tab = $(`#tab-${v}`);
+    const view = $(`#view-${v}`);
+    const isActive = (v === name);
+    if (tab) {
+      tab.classList.toggle('active', isActive);
+      tab.setAttribute('aria-selected', isActive ? 'true' : 'false');
+    }
+    if (view) {
+      view.classList.toggle('active', isActive);
+      if (isActive) {
+        view.removeAttribute('hidden');
+      } else {
+        view.setAttribute('hidden', '');
+      }
+    }
+  });
+
+  // Sync dock rail active styles
+  $('#dock-overview')?.classList.toggle('active-orange', name === 'overview');
+  $('#dock-agent-tab')?.classList.toggle('active-orange', name === 'agent');
+  $('#dock-policy')?.classList.toggle('active-orange', name === 'policy');
+  $('#dock-grid')?.classList.toggle('active-orange', name === 'audit');
+
+  if (name === 'audit') {
+    setTimeout(() => {
+      gridApi?.sizeColumnsToFit();
+    }, 40);
+  }
+}
+
+document.querySelectorAll('.view-tab').forEach((tab) => {
+  tab.addEventListener('click', () => {
+    const v = tab.dataset.view;
+    if (v) setView(v);
+  });
+});
+
+// Approvals jump from dock
+$('#dock-approvals-jump')?.addEventListener('click', () => {
+  setView('agent');
+  setTimeout(() => {
+    $('#panel-approvals')?.scrollIntoView({ behavior: 'smooth' });
+  }, 100);
+});
+
+// Receive button -> Approvals Queue
+$('#ref-btn-receive')?.addEventListener('click', () => {
+  setView('agent');
+  setTimeout(() => {
+    $('#panel-approvals')?.scrollIntoView({ behavior: 'smooth' });
+  }, 100);
+});
+
+// Top up button -> Red Team Suite
+$('#ref-btn-topup')?.addEventListener('click', () => {
+  setView('policy');
+  runAttacks();
+});
+
+// Bell icon -> Approvals Queue
+$('#ref-bell-approvals')?.addEventListener('click', () => {
+  setView('agent');
+  setTimeout(() => {
+    $('#panel-approvals')?.scrollIntoView({ behavior: 'smooth' });
+  }, 100);
+});
+
+// Manual refresh button in URL bar
+$('#btn-manual-refresh')?.addEventListener('click', async () => {
+  toast('Refreshing live telemetry from PayPal engine...');
+  await refresh();
+});
 
 
 (async function init() {
+  setView('overview');
   initGrid();
   await Promise.all([refresh(), loadAuth()]);
-  $('#policy-text').value = state.policy.text;
+  if (state?.policy?.text) {
+    $('#policy-text').value = state.policy.text;
+  }
   const q = new URLSearchParams(location.search);
   if (q.get('approved')) {
+    setView('agent');
     toast('Approved in PayPal. The payment was captured.');
     openDrawer(q.get('approved'));
   } else if (q.get('approval') === 'cancelled') {
+    setView('agent');
     toast('Approval cancelled. The payment is still waiting for you.');
   }
   if ([...q.keys()].length) history.replaceState(null, '', '/');
   setInterval(() => gridApi && gridApi.refreshCells({ columns: ['ts'], force: true }), 30000);
 })();
+
