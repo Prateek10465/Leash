@@ -5,10 +5,12 @@ try { process.loadEnvFile(fileURLToPath(new URL('../.env', import.meta.url))); }
 
 const env = process.env;
 const port = Number(env.PORT || 3000);
+const railwayHost = env.RAILWAY_PUBLIC_DOMAIN || env.RAILWAY_STATIC_URL;
+const defaultBaseUrl = railwayHost ? `https://${railwayHost}` : `http://localhost:${port}`;
 
 export const config = {
   port,
-  baseUrl: (env.BASE_URL || `http://localhost:${port}`).replace(/\/$/, ''),
+  baseUrl: (env.BASE_URL || defaultBaseUrl).replace(/\/$/, ''),
   paypal: {
     clientId: env.PAYPAL_CLIENT_ID || '',
     secret: env.PAYPAL_CLIENT_SECRET || '',

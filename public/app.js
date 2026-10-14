@@ -600,8 +600,13 @@ async function refresh() {
 
 document.addEventListener('click', async (e) => {
   const t = e.target.closest('[data-approve],[data-reject],[data-open],.lane-main,[data-preset],[data-task]');
-  if (!t) return;
-  if (t.dataset.approve) location.href = t.dataset.approve;
+  if (t.dataset.approve) {
+    const rawUrl = t.dataset.approve;
+    const targetUrl = rawUrl.includes('/mock/paypal/approve')
+      ? rawUrl.substring(rawUrl.indexOf('/mock/paypal/approve'))
+      : rawUrl;
+    location.href = targetUrl;
+  }
   else if (t.dataset.reject) {
     await api(`/api/decisions/${t.dataset.reject}/reject`, { method: 'POST' });
     toast('Transaction rejected. No money moved.');
