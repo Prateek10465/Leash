@@ -1,0 +1,374 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Leash — Authenticate & Connect Wallet</title>
+  <meta name="description" content="Dedicated authentication gate for Leash Spending Firewall. Connect your PayPal wallet and manage autonomous agent spending policies.">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%2338bdf8'/%3E%3Cpath d='M9 22V10h3v9h6v3z' fill='white'/%3E%3C/svg%3E">
+  
+  <!-- Premium Font Stacks: Geist & Geist Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700;800&family=Geist+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/styles.css">
+  <style>
+    /* Dedicated Auth Gate Page Styles */
+    .auth-page {
+      min-height: 100dvh;
+      display: grid;
+      place-items: center;
+      padding: 40px 20px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .auth-card {
+      width: 100%;
+      max-width: 480px;
+      background: var(--glass-card-surface), var(--glass-card);
+      backdrop-filter: blur(var(--backdrop-blur-3xl)) saturate(210%) contrast(106%);
+      -webkit-backdrop-filter: blur(var(--backdrop-blur-3xl)) saturate(210%) contrast(106%);
+      border: 1px solid var(--glass-border);
+      border-top-color: var(--glass-border-highlight);
+      border-bottom-color: rgba(255, 255, 255, 0.12);
+      border-radius: 28px;
+      padding: 36px 40px;
+      box-shadow: var(--glass-shadow), 0 20px 60px -10px rgba(56, 189, 248, 0.16);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .auth-brand {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      margin-bottom: 28px;
+    }
+
+    .auth-brand .brand-mark {
+      width: 52px;
+      height: 52px;
+      border-radius: 16px;
+      margin-bottom: 14px;
+    }
+
+    .auth-brand .brand-mark svg {
+      width: 28px;
+      height: 28px;
+    }
+
+    .auth-brand h1 {
+      font-size: 24px;
+      font-weight: 700;
+      letter-spacing: -0.04em;
+      margin-bottom: 4px;
+    }
+
+    .auth-brand p {
+      font-size: 13px;
+      color: var(--text-secondary);
+      max-width: 32ch;
+      line-height: 1.45;
+    }
+
+    /* PayPal Primary OAuth Pill */
+    .btn-paypal-login {
+      width: 100%;
+      background: linear-gradient(135deg, #003087 0%, #0079c1 100%);
+      color: #ffffff;
+      border: 1px solid rgba(255, 255, 255, 0.35);
+      border-top-color: rgba(255, 255, 255, 0.7);
+      padding: 13px 24px;
+      border-radius: 9999px;
+      font-size: 14px;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      cursor: pointer;
+      box-shadow: 0 10px 25px -4px rgba(0, 121, 193, 0.45), inset 0 1px 1px rgba(255, 255, 255, 0.5);
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .btn-paypal-login:hover {
+      background: linear-gradient(135deg, #002569 0%, #0088d9 100%);
+      transform: translateY(-2px);
+      box-shadow: 0 14px 32px -4px rgba(0, 121, 193, 0.6), inset 0 1px 1.5px rgba(255, 255, 255, 0.7);
+    }
+
+    .divider-or {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin: 22px 0;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+
+    .divider-or::before, .divider-or::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--glass-border-subtle);
+    }
+
+    /* Auth Mode Tabs */
+    .auth-tabs {
+      display: flex;
+      background: rgba(18, 22, 42, 0.6);
+      border: 1px solid var(--glass-border);
+      border-radius: 9999px;
+      padding: 3px;
+      margin-bottom: 22px;
+      gap: 3px;
+    }
+
+    .auth-tab {
+      flex: 1;
+      padding: 7px 0;
+      border-radius: 9999px;
+      border: 0;
+      background: none;
+      color: var(--text-muted);
+      font-family: var(--font-sans);
+      font-size: 12.5px;
+      font-weight: 550;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      text-align: center;
+    }
+
+    .auth-tab.active {
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.22) 0%, rgba(255, 255, 255, 0.08) 100%);
+      color: #ffffff;
+      border: 1px solid rgba(255, 255, 255, 0.28);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.4);
+    }
+
+    .form-group {
+      margin-bottom: 16px;
+      width: 100%;
+    }
+
+    .form-group label {
+      display: block;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--text-muted);
+      margin-bottom: 6px;
+      font-weight: 600;
+    }
+
+    .form-group input {
+      width: 100%;
+      box-sizing: border-box;
+      display: block;
+      font-family: var(--font-sans);
+      font-size: 13.5px;
+      color: #ffffff;
+      background: var(--glass-dark-input);
+      backdrop-filter: blur(var(--backdrop-blur-md));
+      -webkit-backdrop-filter: blur(var(--backdrop-blur-md));
+      border: 1px solid var(--glass-border);
+      border-top-color: rgba(255, 255, 255, 0.35);
+      border-radius: 14px;
+      padding: 13px 18px;
+      box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.12);
+      transition: all 0.25s ease;
+    }
+
+    .form-group input:focus {
+      outline: none;
+      background: rgba(28, 36, 68, 0.75);
+      border-color: rgba(56, 189, 248, 0.7);
+      box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.25), inset 0 1px 2px rgba(0, 0, 0, 0.2);
+    }
+
+    /* Pre-Seeded Quick Switcher for Hackathon Judges */
+    .profiles-section {
+      margin-top: 24px;
+      padding-top: 20px;
+      border-top: 1px solid var(--glass-border-subtle);
+    }
+
+    .profiles-section-title {
+      font-family: var(--font-mono);
+      font-size: 10.5px;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--brand);
+      font-weight: 600;
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .profile-card {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 10px 14px;
+      border-radius: 14px;
+      background: var(--glass-layer-bg-outer);
+      border: 1px solid var(--glass-border-subtle);
+      margin-bottom: 8px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .profile-card:hover {
+      background: var(--glass-layer-bg-mid);
+      border-color: var(--glass-border);
+      transform: translateX(3px);
+    }
+
+    .profile-card-left {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .profile-avatar {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #38bdf8 0%, #818cf8 100%);
+      color: #0b1120;
+      font-size: 11px;
+      font-weight: 700;
+      display: grid;
+      place-items: center;
+    }
+
+    .profile-name {
+      font-size: 12.5px;
+      font-weight: 600;
+      color: #ffffff;
+    }
+
+    .profile-role {
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+
+    .auth-error {
+      margin-top: 12px;
+      padding: 10px 14px;
+      border-radius: 10px;
+      background: var(--stop-bg);
+      border: 1px solid var(--stop-border);
+      color: #fecdd3;
+      font-size: 12px;
+      display: none;
+    }
+
+    .auth-footer {
+      margin-top: 20px;
+      text-align: center;
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    .auth-footer a {
+      color: var(--brand);
+      text-decoration: none;
+      font-weight: 550;
+    }
+
+    .auth-footer a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <!-- Ambient Atmosphere Orbs -->
+  <div class="ambient-glow-wrapper" aria-hidden="true">
+    <div class="glow-orb orb-1"></div>
+    <div class="glow-orb orb-2"></div>
+    <div class="glow-orb orb-3"></div>
+    <div class="glow-orb orb-4"></div>
+  </div>
+
+  <main class="auth-page">
+    <div class="auth-card">
+      <div class="auth-brand">
+        <div class="brand-mark" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+            <path d="M9 12l2 2 4-4"/>
+          </svg>
+        </div>
+        <h1>Leash Spending Firewall</h1>
+        <p>Authenticate your operator identity and connect your PayPal sandbox wallet.</p>
+      </div>
+
+      <!-- Log in with PayPal Sandbox Button -->
+      <button type="button" class="btn-paypal-login" id="btn-paypal-oauth">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M7.076 21.337H2.47a.641.641 0 0 1-.633-.74L4.944 3.72a.784.784 0 0 1 .773-.655h6.634c3.484 0 5.617 1.636 5.253 4.887-.333 2.973-2.186 4.604-4.83 4.604h-2.14a.784.784 0 0 0-.773.655l-1.127 7.127a.64.64 0 0 1-.633.74z"/>
+        </svg>
+        <span>Connect with PayPal Sandbox</span>
+      </button>
+
+      <div class="divider-or">or operator credentials</div>
+
+      <!-- Tabs: Sign In / Create Account -->
+      <div class="auth-tabs" role="tablist">
+        <button type="button" class="auth-tab active" id="tab-signin" role="tab">Sign In</button>
+        <button type="button" class="auth-tab" id="tab-signup" role="tab">Create Account</button>
+      </div>
+
+      <form id="auth-form">
+        <div class="form-group" id="group-name" style="display: none;">
+          <label for="name">Operator / Team Name</label>
+          <input type="text" id="name" name="name" placeholder="e.g. Maya Lin (FinOps)" autocomplete="name">
+        </div>
+
+        <div class="form-group">
+          <label for="email">Work Email</label>
+          <input type="email" id="email" name="email" value="alex@personal.example" required placeholder="name@company.com" autocomplete="email">
+        </div>
+
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input type="password" id="password" name="password" value="password123" required placeholder="••••••••" autocomplete="current-password">
+        </div>
+
+        <button type="submit" class="btn primary full-width" id="btn-submit" style="margin-top: 10px;">
+          <span id="btn-submit-text">Sign In to Dashboard</span>
+          <span class="btn-arrow" aria-hidden="true">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </span>
+        </button>
+      </form>
+
+      <div id="auth-error" class="auth-error"></div>
+
+      <!-- Pre-Seeded Quick Switcher for Hackathon Judges -->
+      <div class="profiles-section">
+        <div class="profiles-section-title">
+          <span>⚡ 1-Click Judge Profiles</span>
+          <span style="font-size: 9px; color: var(--text-muted)">Auto-Login</span>
+        </div>
+        <div id="demo-profiles-list"></div>
+      </div>
+
+      <div class="auth-footer">
+        <span>Judging or evaluating? <a href="/?guest=1">Continue as Demo Guest ➔</a></span>
+      </div>
+    </div>
+  </main>
+
+  <script src="/login.js"></script>
+</body>
+</html>
