@@ -2340,244 +2340,161 @@ input:not([type=checkbox]):not([type=radio]):not([type=submit]):not([type=button
   }
 }
 
-/* Mobile Handheld Optimization (Under 768px): 60/120 FPS Fluid Native GPU Performance & De-cluttered UI */
+/* Mobile Handheld Optimization (Unified Warm Glassmorphism & High Performance) */
 @media (max-width: 768px) {
-  /* 1. Eliminate Mobile GPU Lag Completely:
-     Disable expensive offscreen backdrop-filter compositing and hide ambient glow orbs */
+  /* 1. Maintain Warm Glassmorphic Backdrop & Optimize Mobile Performance */
   .ambient-glow-wrapper {
     display: none !important;
   }
 
-  body::before {
+  .glow-orb {
+    animation: none !important;
     display: none !important;
-  }
-
-  *, *::before, *::after {
-    backdrop-filter: none !important;
-    -webkit-backdrop-filter: none !important;
   }
 
   body {
-    background-color: #0b0e1b !important;
-    background-image: radial-gradient(circle at 50% 0%, #1a223f 0%, #0b0e1b 75%) !important;
+    background-color: #0d0c0b !important;
+    background-image: 
+      linear-gradient(180deg, rgba(14, 12, 12, 0.45) 0%, rgba(10, 8, 8, 0.75) 50%, rgba(8, 7, 7, 0.95) 100%),
+      radial-gradient(circle 600px at 70% 15%, rgba(210, 130, 45, 0.22) 0%, transparent 65%),
+      url('/assets/spatial_bg.jpg') !important;
+    background-size: cover !important;
+    background-position: center top !important;
+    background-attachment: scroll !important;
   }
 
-  .top,
-  .panel,
-  .cart-card,
-  .pipeline-visualizer,
-  .appr,
-  #grid,
-  .drawer,
-  .view-nav-bar {
-    background: #12172b !important;
-    border-color: rgba(255, 255, 255, 0.12) !important;
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.35) !important;
+  /* 2. Fluid Layout & Responsive Containers */
+  .spatial-viewport {
+    padding: 10px 10px 84px 10px !important;
   }
 
-  /* Hide floating dock on phones so it doesn't obstruct touch and thumb space */
+  .spatial-window {
+    border-radius: 24px !important;
+    backdrop-filter: blur(20px) saturate(160%) !important;
+    -webkit-backdrop-filter: blur(20px) saturate(160%) !important;
+  }
+
+  .window-topbar {
+    padding: 0 14px !important;
+    height: 44px !important;
+  }
+
+  .win-actions {
+    display: none !important;
+  }
+
+  .win-url-pill {
+    max-width: 210px !important;
+    font-size: 10.5px !important;
+  }
+
+  /* 3. Thumb-Friendly Floating Bottom Capsule Dock */
   .floating-dock {
-    display: none !important;
+    position: fixed !important;
+    left: 50% !important;
+    bottom: 16px !important;
+    top: auto !important;
+    transform: translateX(-50%) !important;
+    width: auto !important;
+    height: 52px !important;
+    flex-direction: row !important;
+    border-radius: 9999px !important;
+    padding: 6px 16px !important;
+    gap: 10px !important;
+    z-index: 9999 !important;
+    background: rgba(22, 20, 20, 0.88) !important;
+    backdrop-filter: blur(24px) saturate(180%) !important;
+    -webkit-backdrop-filter: blur(24px) saturate(180%) !important;
+    border: 1px solid rgba(255, 255, 255, 0.18) !important;
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.8), 0 0 20px rgba(249, 115, 22, 0.15) !important;
   }
 
-  /* 2. Symmetric Fluid Mobile Container & Compact Header */
-  .wrap, .top {
-    width: calc(100% - 24px) !important;
-    max-width: 100% !important;
-    margin-left: auto !important;
-    margin-right: auto !important;
-    padding: 0 !important;
+  .dock-btn {
+    width: 40px !important;
+    height: 40px !important;
   }
 
-  .top {
-    margin-top: 8px !important;
-    margin-bottom: 12px !important;
-    padding: 10px 12px 0 !important;
-    border-radius: 16px !important;
+  .dock-btn.dock-power {
+    margin-top: 0 !important;
   }
 
-  .top-row {
-    flex-direction: column;
-    align-items: stretch;
-    gap: 8px;
-    padding-bottom: 8px;
+  /* 4. Executive Overview Single-Column Responsive Grid */
+  .reference-dashboard-grid {
+    grid-template-columns: 1fr !important;
+    gap: 20px !important;
+    padding: 18px 14px 28px 14px !important;
   }
 
-  .brand-group {
-    align-items: center;
-    gap: 8px;
+  .ref-stats-pill-bar {
+    flex-direction: column !important;
+    gap: 12px !important;
+    align-items: flex-start !important;
+    padding: 14px 16px !important;
   }
 
-  .brand-mark {
-    width: 30px;
-    height: 30px;
-    border-radius: 8px;
-    flex-shrink: 0;
+  .ref-stat-item {
+    width: 100% !important;
   }
 
-  .brand-mark svg {
-    width: 16px;
-    height: 16px;
+  .ref-bottom-row {
+    grid-template-columns: 1fr !important;
+    gap: 16px !important;
   }
 
-  .wordmark {
-    font-size: 16px;
+  .ref-goals-container {
+    flex-wrap: wrap !important;
   }
 
-  .tag-status {
-    font-size: 10px !important;
-    padding: 2px 7px !important;
+  .ref-goal-card {
+    min-width: 120px !important;
   }
 
-  .tagline {
-    display: none !important;
+  .ref-business-card {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 14px !important;
   }
 
-  .top-controls {
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 6px;
+  .ref-donut-wrap {
+    align-self: center !important;
   }
 
-  .modes {
-    gap: 5px;
-  }
-
-  .mode {
-    font-size: 9.5px;
-    padding: 3px 8px;
-  }
-
-  .user-pill {
-    padding: 3px 8px 3px 4px;
-  }
-
-  .user-pill-avatar {
-    width: 20px;
-    height: 20px;
-    font-size: 9px;
-  }
-
-  .user-pill-name {
-    font-size: 10.5px;
-  }
-
-  .user-pill-role {
-    font-size: 8.5px;
-  }
-
-  /* Compact 2x2 Telemetry Matrix (Minimal Vertical Height) */
-  .ledger {
-    grid-template-columns: repeat(2, 1fr) !important;
-    border-radius: 0 0 16px 16px !important;
-  }
-
-  .telemetry-cell {
-    padding: 6px 10px !important;
-    min-height: auto !important;
-    border-right: 1px solid var(--glass-border-subtle) !important;
-    border-bottom: 1px solid var(--glass-border-subtle) !important;
-  }
-
-  .telemetry-cell:nth-child(2n) {
-    border-right: 0 !important;
-  }
-
-  .telemetry-cell:nth-child(3),
-  .telemetry-cell:nth-child(4) {
-    border-bottom: 0 !important;
-  }
-
-  .telemetry-cell .t-label {
-    font-size: 8px !important;
-    letter-spacing: 0.04em !important;
-    margin-bottom: 2px !important;
-  }
-
-  .telemetry-cell .t-value {
-    font-size: 15px !important;
-  }
-
-  .telemetry-cell .t-sub {
-    display: none !important;
-  }
-
-  .meter {
-    display: none !important;
-  }
-
-  /* 3. Mobile Navigation Tab Bar */
+  /* 5. Navigation Tab Bar */
   .view-nav-wrap {
-    width: calc(100% - 24px) !important;
-    margin: 0 auto 12px auto !important;
+    padding: 8px 10px 0 10px !important;
+    overflow-x: auto !important;
   }
 
   .view-nav-bar {
     width: 100% !important;
-    display: grid !important;
-    grid-template-columns: repeat(3, 1fr) !important;
-    gap: 4px !important;
+    display: flex !important;
+    justify-content: space-between !important;
     padding: 4px !important;
     border-radius: 14px !important;
-    box-sizing: border-box !important;
   }
 
   .view-tab {
-    padding: 8px 4px !important;
+    padding: 6px 8px !important;
     font-size: 11px !important;
     gap: 4px !important;
-    justify-content: center !important;
-    border-radius: 10px !important;
   }
 
-  .view-tab svg {
-    width: 13px !important;
-    height: 13px !important;
-  }
-
-  .tab-chip {
-    display: none !important;
-  }
-
-  /* 4. Views & Panels */
-  .views-container {
-    width: calc(100% - 24px) !important;
-    padding-bottom: 40px !important;
-  }
-
-  .dashboard-view.active {
-    gap: 14px !important;
-  }
-
-  .policy-layout {
-    grid-template-columns: 1fr !important;
-    gap: 14px !important;
+  /* 6. Form, Simulator, and Policy Panels (Warm Glass on Mobile) */
+  .panel-container-split,
+  #view-policy .policy-layout,
+  #view-audit .panel {
+    padding: 14px 12px !important;
+    margin: 0 !important;
+    gap: 16px !important;
   }
 
   .panel {
     padding: 16px 14px !important;
-    border-radius: 16px !important;
-  }
-
-  .panel-header h2 {
-    font-size: 15px !important;
-  }
-
-  .panel-header .hint {
-    font-size: 11px !important;
-    line-height: 1.35 !important;
-  }
-
-  .presets-row, .scenarios-strip {
-    gap: 6px !important;
-    margin-bottom: 10px !important;
-  }
-
-  .preset-chip, .scenario-pill {
-    font-size: 10.5px !important;
-    padding: 5px 12px !important;
+    border-radius: 20px !important;
+    background: rgba(255, 255, 255, 0.04) !important;
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+    backdrop-filter: blur(16px) saturate(160%) !important;
+    -webkit-backdrop-filter: blur(16px) saturate(160%) !important;
   }
 
   .agent-form {
@@ -2624,7 +2541,7 @@ input:not([type=checkbox]):not([type=radio]):not([type=submit]):not([type=button
     text-align: center !important;
   }
 
-  /* Pipeline Architecture: 2x2 Grid on Mobile */
+  /* Pipeline Architecture 2x2 Grid on Mobile */
   .pipeline-visualizer {
     display: grid !important;
     grid-template-columns: repeat(2, 1fr) !important;
@@ -2655,7 +2572,7 @@ input:not([type=checkbox]):not([type=radio]):not([type=submit]):not([type=button
   /* Cart Summary */
   .cart-card {
     padding: 14px 16px !important;
-    border-radius: 16px !important;
+    border-radius: 18px !important;
     flex-direction: column !important;
     align-items: stretch !important;
     gap: 12px !important;
@@ -2668,7 +2585,7 @@ input:not([type=checkbox]):not([type=radio]):not([type=submit]):not([type=button
   /* Approval item */
   .appr {
     padding: 14px 16px !important;
-    border-radius: 16px !important;
+    border-radius: 18px !important;
     flex-direction: column !important;
     align-items: stretch !important;
     gap: 10px !important;
@@ -2681,21 +2598,26 @@ input:not([type=checkbox]):not([type=radio]):not([type=submit]):not([type=button
   /* AG Grid audit log */
   #grid {
     height: 320px !important;
-    border-radius: 14px !important;
+    border-radius: 16px !important;
   }
 
   /* Replay Drawer: Native Bottom Sheet Pattern */
   .drawer {
     width: 100vw !important;
     max-width: 100vw !important;
-    border-radius: 20px 20px 0 0 !important;
+    border-radius: 24px 24px 0 0 !important;
     padding: 20px 16px !important;
     right: 0 !important;
     bottom: 0 !important;
     top: auto !important;
     max-height: 85vh !important;
+    background: rgba(22, 20, 20, 0.92) !important;
+    backdrop-filter: blur(24px) saturate(180%) !important;
+    -webkit-backdrop-filter: blur(24px) saturate(180%) !important;
+    border: 1px solid rgba(255, 255, 255, 0.16) !important;
   }
 }
+
 
 @media (prefers-reduced-motion: reduce) {
   * {
